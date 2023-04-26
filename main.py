@@ -18,7 +18,7 @@ def fetch_data(adcode):
 
 if __name__ == '__main__':
 
-    api_key = 'YOUR API KEY'
+    api_key = '2c3d638bee69a8ddc420accbf79e6256'
 
     df = pd.read_excel("assets/amap_adcode.xlsx")
     # 排除第一条和最后一条数据
@@ -31,8 +31,9 @@ if __name__ == '__main__':
         province_code = province_row['adcode']
         province = fetch_data(province_code)
         # 过滤城市数据
-        city_df = df[df['adcode'].astype(str).str.startswith(str(int(province_code / 10000))) & df['adcode'].astype(
-            str).str.endswith('00')]
+        city_df = df[(df['adcode'].astype(str).str.startswith(str(int(province_code / 10000))))
+                     & (df['adcode'].astype(str).str.endswith('00'))
+                     & (df['adcode'].astype(str) != str(province_code))]
         cities = []
         for _, city_row in city_df.iterrows():
             city_code = city_row['adcode']
